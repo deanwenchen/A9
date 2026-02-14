@@ -1,0 +1,51 @@
+@{
+    ViewBag.Title = "音乐专辑信息";
+    Layout = "~/Views/Shared/_EditLayout.cshtml";
+    string content = ViewBag.AlbumContent as string;
+}
+
+@model AlbumInfo
+
+
+<LeoContainer ContainerID="dataEdit">
+    <LeoSticky>
+        <div class="tool_container">
+            <LeoToolButton></LeoToolButton>
+        </div>
+    </LeoSticky>
+    <div class="edit_container">
+        <LeoForm LabelWidth="150">
+            <LeoCaption>专辑信息</LeoCaption>
+            <LeoInput V-Model="AlbumName" Label="专辑名称" Width="600" MaxLength="100" CheckValueEmpty="True" ErrorMessage="请输入专辑名称"></LeoInput>
+        </LeoForm>
+    </div>
+</LeoContainer>
+
+@section bodyfoot {
+
+    <script type="text/javascript">
+            createVueApp({
+                el: '#dataEdit',
+                mixins: [edit],
+                data: {
+                    AudioTagDatas: [],
+                    TagsDatas: [],
+                    editData: @Html.JsonEditData(
+                    new
+                    {
+                        Model.AlbumID,
+                        Model.AlbumName,
+       
+                    })
+                  },
+
+                methods:
+                {
+                   
+
+                },
+
+            });
+
+    </script>
+}

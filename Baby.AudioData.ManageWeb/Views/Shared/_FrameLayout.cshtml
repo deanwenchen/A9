@@ -1,0 +1,105 @@
+@{
+    string defaultUIResourceDomain = "";
+    string uiResourceUrl = "";
+    if (!SysVariable.IsCrisishost)
+    {
+        if (SysVariable.IsProduction)
+        {
+            defaultUIResourceDomain = "https://uiresources.production.platform.xxxx.com";
+        }
+        else
+        {
+            defaultUIResourceDomain = "https://uiresources.development.platform.xxxx.com";
+        }
+        uiResourceUrl = ConfigHelper.GetAppString("UIResourcesUrl", defaultUIResourceDomain, "powershare.json");
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <title>@ViewBag.Title</title>
+    @RenderSection("headtop", false)
+
+    <script>
+        var uiResourceDomain = '@(uiResourceUrl)';
+    </script>
+    <script src="@(uiResourceUrl)/default_vue3_api.js?ver=@Html.Raw(DateTime.Now.ToString("yyyyMMddHHmmss"))"></script>
+
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        .frame-container {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            position: absolute
+        }
+
+        #frame-left-container {
+            width: 19.8%;
+            height: 100%;
+            float: left;
+        }
+
+        #frame-right-container {
+            width: 79.8%;
+            height: 100%;
+            float: left
+        }
+
+        .frame-h-bar {
+            width: 2px;
+            height: 100%;
+            resize: horizontal;
+            cursor: w-resize;
+            background-color: #eef1f6;
+            float: left;
+        }
+
+        .main-loading {
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-tree-view-container {
+            height: 100%;
+        }
+
+        #frame-container {
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="window_body window_body_frame">
+
+    @RenderSection("bodytop", false)
+
+
+    @RenderBody()
+
+
+    <script>
+        function setPageLoading(val) {
+            framePage.pageLoading = val
+        }
+        function setViewFrameUrl(val) {
+            if (framePage.viewUrl != val) {
+                framePage.viewUrl = val
+            } else {
+                framePage.pageLoading = false
+            }
+        }
+    </script>
+    @RenderSection("bodyfoot", false)
+
+</body>
+</html>

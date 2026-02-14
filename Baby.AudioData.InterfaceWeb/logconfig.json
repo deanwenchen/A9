@@ -1,0 +1,57 @@
+﻿{
+  "LogConfig": {
+    "Application": "xxxx",
+    "Host": "",
+    "Error": {
+      "ErrorUrl": "",
+      "ErrorView": "",
+      "NoFoundUrl": "",
+      "NoFoundView": "",
+      "ErrorHint": "对不起页面出错，请与管理员联系",
+      "IsRedirect": false
+    },
+    "Switch": {
+      "IsDispose": true,
+      "IsInterface": false,
+      "IsSql": false,
+      "IsSolr": false,
+      "IsESearch": false
+    },
+    "TimeSql": {
+      "Timeout": 1000,
+      "IsWrite": false,
+      "Url": "",
+      "IP": "",
+      "DeviceID": "",
+      "AccountID": "",
+      "ProductID": "",
+      "PlatForm": "",
+      "VerID": ""
+    },
+    "TimeUrl": {
+      "Timeout": 1,
+      "IsWrite": false,
+      "Url": "",
+      "IP": "",
+      "DeviceID": "",
+      "AccountID": "",
+      "ProductID": "",
+      "PlatForm": "",
+      "VerID": ""
+    },
+    "Tracks": [
+      {
+        "Types": "*",
+        "IsWrite": false,
+        "Url": "",
+        "IP": "",
+        "DeviceID": "",
+        "AccountID": "",
+        "ProductID": "",
+        "PlatForm": "",
+        "VerID": ""
+      }
+    ]
+
+  }
+}

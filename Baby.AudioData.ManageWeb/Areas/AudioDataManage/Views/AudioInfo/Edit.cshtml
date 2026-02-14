@@ -1,0 +1,37 @@
+@{
+    ViewBag.Title = "音频信息";
+    Layout = "~/Views/Shared/_EditLayout.cshtml";
+}
+
+@model Baby.AudioData.Entity.AudioInfo
+
+<LeoContainer ContainerID="dataEdit">
+    <LeoSticky>
+        <div class="tool_container">
+            <LeoToolButton></LeoToolButton>
+        </div>
+    </LeoSticky>
+    <div class="edit_container">
+        <LeoForm LabelWidth="150">
+            <LeoCaption>音频信息</LeoCaption>
+            <LeoInput V-Model="AudioName" Label="音频名称" Width="600" MaxLength="200" CheckValueEmpty="True" ErrorMessage="请输入音频名称"></LeoInput>
+        </LeoForm>
+    </div>
+</LeoContainer>
+
+@section bodyfoot {
+    <script type="text/javascript">
+        createVueApp({
+            el: '#dataEdit',
+            mixins: [edit],
+            data: {
+                editData: @Html.JsonEditData(new
+                {
+                    Model.AudioID,
+                    Model.AudioName,
+                })
+            },
+            methods: { }
+        });
+    </script>
+}

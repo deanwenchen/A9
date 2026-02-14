@@ -1,0 +1,25 @@
+{
+  "name": "session-test",
+  "version": "0.0.1",
+  "description": "Project-level test plugin for session-start hook",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/hooks/session-start.js\""
+          }
+        ]
+      }
+    ]
+  },
+  "commands": [
+    {
+      "name": "session-test-command",
+      "description": "Test command to appear in /plugin",
+      "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/hooks/session-start.js\""
+    }
+  ]
+}

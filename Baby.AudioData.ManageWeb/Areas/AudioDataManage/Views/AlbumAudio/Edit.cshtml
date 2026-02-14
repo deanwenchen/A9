@@ -1,0 +1,43 @@
+@{
+    ViewBag.Title = "专辑音频关联";
+    Layout = "~/Views/Shared/_EditLayout.cshtml";
+}
+
+@model Baby.AudioData.Entity.AlbumAudio
+
+<LeoContainer ContainerID="dataEdit">
+    <LeoSticky>
+        <div class="tool_container">
+            <LeoToolButton></LeoToolButton>
+        </div>
+    </LeoSticky>
+    <div class="edit_container">
+        <LeoForm LabelWidth="150">
+            <LeoCaption>关联信息</LeoCaption>
+            <LeoSelect V-Model="AlbumID" Label="专辑" Width="300" CheckValueEmpty="True" ErrorMessage="请选择专辑"
+                       DataUrl="/AudioDataManage/AlbumAudio/GetAlbumList" DataLabel="name" DataValue="id"></LeoSelect>
+            <LeoSelect V-Model="AudioID" Label="音频" Width="300" CheckValueEmpty="True" ErrorMessage="请选择音频"
+                       DataUrl="/AudioDataManage/AlbumAudio/GetAudioList" DataLabel="name" DataValue="id"></LeoSelect>
+            <LeoInput V-Model="SortIndex" Label="排序号" Width="150" QueryDataType="Int" ValidationExpression="\d+" ValidationMessage="请输入正整数"></LeoInput>
+        </LeoForm>
+    </div>
+</LeoContainer>
+
+@section bodyfoot {
+    <script type="text/javascript">
+        createVueApp({
+            el: '#dataEdit',
+            mixins: [edit],
+            data: {
+                editData: @Html.JsonEditData(new
+                {
+                    Model.AlbumAudioID,
+                    Model.AlbumID,
+                    Model.AudioID,
+                    Model.SortIndex,
+                })
+            },
+            methods: { }
+        });
+    </script>
+}

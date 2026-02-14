@@ -1,0 +1,69 @@
+@{
+    ViewBag.Title = "专辑列表";
+    Layout = "~/Views/Shared/_ListLayout.cshtml";
+    var cateID = RequestHelper.GetInt("Power_MenuCoteID", 0);
+}
+
+<style>
+    .el-button + .el-button {
+        margin-left: 10px;
+        margin-bottom: 10px;
+    }
+
+    a:link {
+        color: #FFFFFF;
+        text-decoration: none;
+    }
+
+    a:visited {
+        color: #FFFFFF;
+        text-decoration: none
+    }
+</style>
+
+<LeoContainer ContainerID="gridList">
+    <LeoSticky>
+        <div class="tool_container">
+            <LeoToolButton IsOperationLog="true" IsDocHelp="true" IsNoteHelp="true">
+            </LeoToolButton>
+        </div>
+        <div class="search_container">
+            <LeoForm Type="Query">
+                <LeoQueryInput Label="专辑标识" QueryMethod="Equal" Width="80" V-Model="AlbumID" QueryDataType="Int" ValidationExpression="\d+" ValidationMessage="请输入正整数"></LeoQueryInput>
+                <LeoQueryInput Label="专辑名称" QueryMethod="Contains" Width="120" V-Model="AlbumName" QueryDataType="String"></LeoQueryInput>
+            </LeoForm>
+        </div>
+    </LeoSticky>
+    <div class="data_container">
+
+        <LeoTable KeyName="AlbumID" IsHeaderStickyTop="True">
+            <ColumnCheck></ColumnCheck>
+            <ColumnField FieldName="AlbumID" Label="专辑标识" Width="90" IsSort="True"></ColumnField>
+            <ColumnField FieldName="AlbumName" Label="专辑名称" IsSort="True">
+            </ColumnField>
+            <ColumnField FieldName="ModifyDate" Label="修改用户" DateFormatter="yyyy-MM-dd HH:mm:ss" Width="150" IsSort="True">
+            </ColumnField>
+        </LeoTable>
+
+    </div>
+</LeoContainer>
+@section bodyfoot {
+
+    <script type="text/javascript">
+
+        createVueApp({
+            el: '#gridList',
+            mixins: [grid],
+            data: {
+                readDataUrl: '@Html.SetPowerPublicQuery("/AudioDataManage/AlbumInfo/ReadData")',
+                pageSize: 20,
+                queryData: @Html.SetQueryData(),
+            },
+            methods: {
+
+            }
+        })
+
+
+    </script>
+}

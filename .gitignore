@@ -1,0 +1,56 @@
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.slnx
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+*.o
+*.so
+*.a
+*.lib
+*.dll
+*.exe
+*.pdb
+*.mdb
+*.cache
+*.min.js
+*.min.css
+
+# NuGet Packages
+*.nupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+
+# Project Files
+*.user
+*.dotCover
+
+# IDE
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# LeoCore Framework (external dependencies)
+../../LeoCore/
+
+# Configuration files (if needed to exclude)
+# appsettings.Development.json
+# appsettings.Production.json

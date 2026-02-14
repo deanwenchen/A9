@@ -1,0 +1,52 @@
+@{
+    string defaultUIResourceDomain = "";
+    string uiResourceUrl = "";
+    if (!SysVariable.IsCrisishost)
+    {
+        if (SysVariable.IsProduction)
+        {
+            defaultUIResourceDomain = "https://uiresources.production.platform.xxxx.com";
+        }
+        else
+        {
+            defaultUIResourceDomain = "https://uiresources.development.platform.xxxx.com";
+        }
+        uiResourceUrl = ConfigHelper.GetAppString("UIResourcesUrl", defaultUIResourceDomain, "powershare.json");
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <title>@ViewBag.Title</title>
+    @RenderSection("headtop", false)
+
+    <script>
+        var uiResourceDomain = '@(uiResourceUrl)';
+    </script>
+    <script src="@(uiResourceUrl)/default_vue3_api.js?ver=@Html.Raw(DateTime.Now.ToString("yyyyMMddHHmmss"))"></script>
+    <script src="/UEditor/vue-ueditor-wrap.min.js"></script>
+
+    @RenderSection("headfoot", false)
+
+
+</head>
+<body class="window_body window_body_edit">
+
+    @RenderSection("bodytop", false)
+
+
+    @RenderBody()
+
+
+    <div id="modalPageTemplate" >
+        <LeoDialog Title=":title" Loading="dialogLoading" Top=":top" V-Model="visible" Width=":width" ContentHeight=":height"  Url=":url" V-If="url&&visible">
+        </LeoDialog>
+    </div>
+    @RenderSection("bodyfoot", false)
+</body>
+</html>

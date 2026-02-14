@@ -1,0 +1,49 @@
+@{
+    ViewBag.Title = "批量新增音频";
+    Layout = "~/Views/Shared/_EditLayout.cshtml";
+}
+
+<LeoContainer ContainerID="dataEdit">
+    <LeoSticky>
+        <div class="tool_container">
+            <LeoToolButton></LeoToolButton>
+        </div>
+    </LeoSticky>
+    <div class="edit_container">
+        <LeoForm LabelWidth="150">
+            <LeoCaption>批量新增音频</LeoCaption>
+            <div class="el-form-item__content" style="margin-left: 150px;">
+                <el-input type="textarea" v-model="AudioNames" :rows="15"
+                          placeholder="每行输入一个音频名称，一次可添加多个"></el-input>
+                <div class="el-form-item__error" v-if="errors.AudioNames" v-text="errors.AudioNames"></div>
+                <div style="margin-top: 10px; color: #909399; font-size: 12px;">
+                    说明：每行一个音频名称，系统会自动过滤空行和重复项
+                </div>
+            </div>
+        </LeoForm>
+    </div>
+</LeoContainer>
+
+@section bodyfoot {
+    <script type="text/javascript">
+        createVueApp({
+            el: '#dataEdit',
+            mixins: [edit],
+            data: {
+                editData: { AudioNames: '' },
+                errors: {}
+            },
+            methods: {
+                beforeSave: function() {
+                    this.errors = {};
+                    if (!this.editData.AudioNames || this.editData.AudioNames.trim() === '') {
+                        this.errors.AudioNames = '请输入音频名称';
+                        this.$message.error('请输入音频名称');
+                        return false;
+                    }
+                    return true;
+                }
+            }
+        });
+    </script>
+}

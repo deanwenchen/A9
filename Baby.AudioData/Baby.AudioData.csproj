@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Leo.Core">
+      <HintPath>..\..\LeoCore\net6.0\Core\Leo.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Leo.Data">
+      <HintPath>..\..\LeoCore\net6.0\Core\Leo.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Leo.Data.Redis">
+      <HintPath>..\..\LeoCore\net6.0\Redis\Leo.Data.Redis.dll</HintPath>
+    </Reference>
+    <Reference Include="Leo.OSSData">
+      <HintPath>..\..\LeoCore\net6.0\Core\Leo.OSSData.dll</HintPath>
+    </Reference>
+    <Reference Include="Leo.Log">
+      <HintPath>..\..\LeoCore\net6.0\Core\Leo.Log.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data">
+      <HintPath>..\..\LeoCore\net6.0\Core\MySql.Data.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

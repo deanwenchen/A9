@@ -1,0 +1,54 @@
+@{
+    ViewBag.Title = "权限角色表";
+    Layout = "~/Views/Shared/_EditLayout.cshtml";
+}
+
+@model PowerUser
+<LeoContainer ContainerID="userEdit">
+    <div class="edit_container">
+        <LeoForm InputWidth="100%">
+            <LeoInput label="姓名" CheckValueEmpty="True" V-Model="UserName"></LeoInput>
+            <LeoInput label="昵称" CheckValueEmpty="True" V-Model="NickName"></LeoInput>
+            <LeoInput Label="手机号码" V-Model="Phone"></LeoInput>
+        </LeoForm>
+    </div>
+    <div class="dialog_tool_container">
+        <LeoButton OnClick="handleSaveUserData()">提交</LeoButton>
+    </div>
+</LeoContainer>
+
+@section bodyfoot{
+
+    <script type="text/javascript">
+        createVueApp({
+            el: '#userEdit',
+            mixins: [edit],
+            data: {
+                dialogUserEditVisible: false,
+                    editData:@Html.JsonEditData(
+                    new {
+                        Model.UserID,
+                        Model.NickName,
+                        Model.UserName,
+                        Model.Phone,
+                    })
+            },
+            methods: {
+                handleSaveUserData() {
+                    this.saveData('/Desktop/PerfectUserInfoSave').then(res => {
+                        if (res) {
+                            if (res.ResultCode != "0") {
+                                this.$message.error(res.ResultMessage)
+                            } else {
+                                window.parent.deskTop.$message.success('保存成功')
+                                window.parent.deskTop.closeModal();
+                            }
+                        }
+                    })
+                }
+            }
+
+        });
+
+    </script>
+}

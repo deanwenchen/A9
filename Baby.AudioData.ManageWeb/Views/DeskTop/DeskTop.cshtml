@@ -1,0 +1,57 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = ViewBag.DeskTopTitle;
+    string CoteUrl = "";
+    if (ViewBag.PowerGroup != null)
+    {
+
+        if (SysVariable.IsDevelopment)
+        {
+            CoteUrl = ViewBag.PowerGroup.DevelopmentHost;
+        }
+        else if (SysVariable.IsStaging)
+        {
+            CoteUrl = ViewBag.PowerGroup.StagingHost;
+        }
+        else
+        {
+            CoteUrl = ViewBag.PowerGroup.ProductionHost;
+        }
+    }
+
+}
+<LeoContainer ID="deskTop" VCloak="True">
+    <LeoDesktopPage ExtendPageUrl="@(ViewBag.PowerViewUrl)" UserName="@(User.Identity.Name)" MenuData="treeData" MainPageUrl="/Desktop/Index"  MenuFilterable="true" MoveSize="true" >
+        @if (ViewBag.PowerCote != null)
+        {
+            <LeoSlot Name="Product">
+                <LeoSelect Label="产品" V-Model="dataCoteID" OnChange="handleChangePowerCote" Width="100%" Url="/Desktop/SearchCoteData" LabelField="CoteName" ValueField="CoteID">
+                </LeoSelect>
+            </LeoSlot>
+        }
+        @(ViewBag.DeskTopTitle)
+    </LeoDesktopPage>
+</LeoContainer>
+
+<script type="text/javascript">
+        createVueApp({
+            el: '#deskTop',
+            mixins: [deskTopMixin],
+            data() {
+                return {
+                    currDataCoteID:'@(ViewBag.PowerCoteID)',
+                    dataCoteID: '@(ViewBag.PowerCoteID)',
+                    treeData: @Html.Raw(ViewBag.TreeData),
+                    coteUrl: '@(CoteUrl)',
+                    loginUrl: '@ViewBag.LoginUrl',
+                    sysVariable:@(ViewBag.SysVariable),
+                }
+            }
+        })
+    </script>
+
+
+
+
+
+

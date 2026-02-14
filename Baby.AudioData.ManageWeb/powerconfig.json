@@ -1,0 +1,21 @@
+﻿{
+  "PowerConfig": {
+    "GroupID": "4252f6e4983844c289426724b36c39e5",
+    "GroupName": "管理平台",
+    "GroupCoteID": "",
+    "Localhost": {
+      "CoteID": "",
+      "UserID": 4,
+      "IsSuper": true
+    },
+    "Development": {
+      "DeskTopUrl": "https://manage.tm.xxxx.com",
+      "CookieDomain": ".tm.xxxx.com"
+    },
+    "Production": {
+      "DeskTopUrl": "https://manage.mm.xxxx.com",
+      "CookieDomain": ".mm.xxxx.com"
+    }
+
+  }
+}

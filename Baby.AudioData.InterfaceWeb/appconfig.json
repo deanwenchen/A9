@@ -1,0 +1,7 @@
+﻿{
+
+  "AppSettings": {
+    "IsRedisLocalCache": "true"
+  }
+
+}

@@ -1,0 +1,90 @@
+@{
+    ViewBag.Title = "批量添加音频到专辑";
+    Layout = "~/Views/Shared/_EditLayout.cshtml";
+}
+
+<LeoContainer ContainerID="dataEdit">
+    <LeoSticky>
+        <div class="tool_container">
+            <LeoToolButton></LeoToolButton>
+        </div>
+    </LeoSticky>
+    <div class="edit_container">
+        <LeoForm LabelWidth="150">
+            <LeoCaption>批量添加音频</LeoCaption>
+            <LeoSelect V-Model="AlbumID" Label="专辑" Width="300" CheckValueEmpty="True" ErrorMessage="请选择专辑"
+                       DataUrl="/AudioDataManage/AlbumAudio/GetAlbumList" DataLabel="name" DataValue="id"></LeoSelect>
+
+            <div class="el-form-item__content" style="margin-left: 150px;">
+                <div style="margin-bottom: 10px;">
+                    <label style="font-weight: bold;">选择音频（多选）</label>
+                </div>
+                <el-select v-model="selectedAudioIDs" multiple filterable placeholder="请选择音频（可多选）"
+                           style="width: 500px;" collapse-tags collapse-tags-tooltip>
+                    <el-option v-for="item in audioOptions" :key="item.id" :label="item.name" :value="item.id">
+                    </el-option>
+                </el-select>
+                <div style="margin-top: 10px; color: #909399; font-size: 12px;">
+                    说明：可选择多个音频一次性添加到专辑
+                </div>
+            </div>
+
+            <div class="el-form-item__content" style="margin-left: 150px; margin-top: 15px;" v-if="selectedAudioIDs.length > 0">
+                <div style="margin-bottom: 5px;">
+                    <label style="font-weight: bold;">已选择 {{selectedAudioIDs.length}} 个音频：</label>
+                </div>
+                <div style="border: 1px solid #dcdfe6; border-radius: 4px; padding: 10px; min-height: 60px; max-height: 200px; overflow-y: auto;">
+                    <el-tag v-for="id in selectedAudioIDs" :key="id" closable @close="removeAudio(id)"
+                            style="margin-right: 10px; margin-bottom: 10px;">
+                        {{getAudioName(id)}}
+                    </el-tag>
+                </div>
+            </div>
+        </LeoForm>
+    </div>
+</LeoContainer>
+
+@section bodyfoot {
+    <script type="text/javascript">
+        createVueApp({
+            el: '#dataEdit',
+            mixins: [edit],
+            data: {
+                editData: { AlbumID: '', AudioIDs: '' },
+                selectedAudioIDs: [],
+                audioOptions: []
+            },
+            mounted: function() {
+                var self = this;
+                // 加载音频列表
+                axios.get('/AudioDataManage/AlbumAudio/GetAudioList').then(function(res) {
+                    self.audioOptions = res.data;
+                });
+            },
+            methods: {
+                removeAudio: function(id) {
+                    var index = this.selectedAudioIDs.indexOf(id);
+                    if (index > -1) {
+                        this.selectedAudioIDs.splice(index, 1);
+                    }
+                },
+                getAudioName: function(id) {
+                    var audio = this.audioOptions.find(function(a) { return a.id === id; });
+                    return audio ? audio.name : 'ID:' + id;
+                },
+                beforeSave: function() {
+                    if (!this.editData.AlbumID || this.editData.AlbumID == 0) {
+                        this.$message.error('请选择专辑');
+                        return false;
+                    }
+                    if (this.selectedAudioIDs.length === 0) {
+                        this.$message.error('请选择音频');
+                        return false;
+                    }
+                    this.editData.AudioIDs = this.selectedAudioIDs.join(',');
+                    return true;
+                }
+            }
+        });
+    </script>
+}

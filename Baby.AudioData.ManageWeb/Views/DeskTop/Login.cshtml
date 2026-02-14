@@ -1,0 +1,225 @@
+@{
+    ViewBag.Title = "登录";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="logininfo">
+    <div class="login-container">
+        <div>
+            <el-form class="login-form" autoComplete="on" size="medium" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
+
+                <div class="title-container">
+                    <h3 class="title">后台管理</h3>
+                </div>
+                <div>
+                    <el-form-item prop="username">
+                        <el-input name="username" prefix-icon="User" autocomplete="off" type="text" v-model="loginForm.username" placeholder="账号">
+                        </el-input>
+                    </el-form-item>
+
+                    <el-form-item prop="password">
+                        <el-input name="password" prefix-icon="Key" @@keyup.native="onEnter" show-password autocomplete="off" :type="passwordType" @@keyup.enter.native="handleLogin" v-model="loginForm.password" placeholder="密码">
+                        </el-input>
+                    </el-form-item>
+                    <el-button type="primary" size="medium" style="width:100%;margin-bottom:30px;" icon="Pointer" :loading="loading" @@click.native.prevent="handleLogin" :disabled="loginButtonDisabled">登录</el-button>
+                </div>
+
+            </el-form>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+
+
+    createVueApp({
+        el: '#logininfo',
+        data(){return { 
+                loginUrl:'/Desktop/LoginSave',
+                loginForm: {
+                    username: '',
+                    password: '',
+                },
+                loginRules: {
+                    username: [{ required: true, trigger: 'blur' ,message:'请输入账号'}],
+                    password: [{ required: true, trigger: 'blur', message:'请输入密码' }, {min:6,message:'密码至少六位数'}]
+                },
+                passwordType: 'password',
+                loading: false,
+                showDialog: false,
+                loginButtonDisabled: false
+         }},
+        methods: {
+            loginIn() {
+                location.href = '@Html.Raw(ViewBag.ReturnUrl)';
+            },
+            onEnter: function (e)
+            {
+                if (e.keyCode == 13)
+                {
+                    this.handleLogin();
+                }
+            },
+            handleLogin() {
+                var Vthis = this;
+                this.$refs.loginForm.validate(valid => {
+                    if (valid&&!this.loading) {
+                        this.loading = true
+                          jQuery.ajax({
+                                url: this.loginUrl,
+                                method: 'post',
+                                data: this.loginForm,
+                                success: function (res) {
+                                    if (res.ResultCode !== '0') {
+                                        Vthis.$message.error(res.ResultMessage)
+                                    } else {
+                                        Vthis.$message.success("登录成功")
+                                        setTimeout(function () {
+                                            Vthis.loginIn();
+                                        }, 200)
+                                }
+                                Vthis.loading = false;
+                                }
+                            })
+
+                    }
+                })
+            }
+        }
+
+    });
+
+    $(function(){
+        Vue.prototype.$ELEMENT = { size: 'small' };
+    })
+
+</script>
+<style type="text/css">
+    body {
+        padding: 0;
+        margin: 0;
+    }
+
+    .login-container {
+        background-image: url(/powerimgs/bgImg.jpg);
+        background-size: cover;
+        width: 100%;
+        height: 100%;
+    }
+
+    .login-form {
+        width: 24%;
+        position: fixed;
+        background: #0f1a1494;
+        left: 38%;
+        padding: 1% 1%;
+        margin-top: 12%;
+        border-radius: 5px;
+    }
+
+    .login-container {
+        height: calc(100vh);
+    }
+
+        .login-container .el-input {
+            display: inline-block;
+            height: 47px;
+        }
+
+            .login-container .el-input input {
+                background: transparent;
+                border: 0;
+                -webkit-appearance: none;
+                border-radius: 0;
+                color: #fff;
+                height: 47px;
+                caret-color: #fff
+            }
+
+                .login-container .el-input input:-webkit-autofill {
+                    -webkit-box-shadow: 0 0 0 1000px #283443 inset !important;
+                    box-shadow: inset 0 0 0 1000px #283443 !important;
+                    -webkit-text-fill-color: #fff !important
+                }
+
+        .login-container .el-form-item {
+            border: 1px solid hsla(0,0%,100%,.1);
+            background: rgba(0,0,0,.1);
+            border-radius: 5px;
+            color: #454545
+        }
+
+    .login-container {
+        min-height: 100%;
+        width: 100%;
+        background-color: #2d3a4b;
+        overflow: hidden
+    }
+
+
+
+        .login-container .tips {
+            font-size: 14px;
+            color: #fff;
+            margin-bottom: 10px
+        }
+
+            .login-container .tips span:first-of-type {
+                margin-right: 16px
+            }
+
+        .login-container .svg-container {
+            padding: 6px 5px 6px 15px;
+            color: #889aa4;
+            vertical-align: middle;
+            width: 30px;
+            display: inline-block
+        }
+
+        .login-container .title-container {
+            position: relative
+        }
+
+            .login-container .title-container .title {
+                font-size: 26px;
+                color: #eee;
+                margin: 0 auto 40px auto;
+                text-align: center;
+                font-weight: 700
+            }
+
+            .login-container .title-container .set-language {
+                color: #fff;
+                position: absolute;
+                top: 3px;
+                font-size: 18px;
+                right: 0;
+                cursor: pointer
+            }
+
+        .login-container .show-pwd {
+            position: absolute;
+            right: 10px;
+            top: 7px;
+            font-size: 16px;
+            color: #889aa4;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none
+        }
+
+        .login-container .thirdparty-button {
+            position: absolute;
+            right: 0;
+            bottom: 6px
+        }
+
+    @@media only screen and (max-width: 470px) {
+        .login-container .thirdparty-button {
+            display: none
+        }
+    }
+</style>

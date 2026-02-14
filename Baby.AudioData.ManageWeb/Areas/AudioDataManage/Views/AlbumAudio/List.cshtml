@@ -1,0 +1,46 @@
+@{
+    ViewBag.Title = "专辑音频关联";
+    Layout = "~/Views/Shared/_ListLayout.cshtml";
+}
+
+<LeoContainer ContainerID="gridList">
+    <LeoSticky>
+        <div class="tool_container">
+            <LeoToolButton IsOperationLog="true" IsDocHelp="true" IsNoteHelp="true"></LeoToolButton>
+        </div>
+        <div class="search_container">
+            <LeoForm Type="Query">
+                <LeoQuerySelect Label="专辑" QueryMethod="Equal" Width="150" V-Model="AlbumID" QueryDataType="Int"
+                                DataUrl="/AudioDataManage/AlbumAudio/GetAlbumList" DataLabel="name" DataValue="id"></LeoQuerySelect>
+                <LeoQueryInput Label="音频标识" QueryMethod="Equal" Width="80" V-Model="AudioID" QueryDataType="Int" ValidationExpression="\d+" ValidationMessage="请输入正整数"></LeoQueryInput>
+            </LeoForm>
+        </div>
+    </LeoSticky>
+    <div class="data_container">
+        <LeoTable KeyName="AlbumAudioID" IsHeaderStickyTop="True">
+            <ColumnCheck></ColumnCheck>
+            <ColumnField FieldName="AlbumAudioID" Label="关联标识" Width="120" IsSort="True"></ColumnField>
+            <ColumnField FieldName="AlbumID" Label="专辑标识" Width="90" IsSort="True"></ColumnField>
+            <ColumnField FieldName="AlbumName" Label="专辑名称" Width="200"></ColumnField>
+            <ColumnField FieldName="AudioID" Label="音频标识" Width="90" IsSort="True"></ColumnField>
+            <ColumnField FieldName="AudioName" Label="音频名称" Width="250"></ColumnField>
+            <ColumnField FieldName="SortIndex" Label="排序" Width="80" IsSort="True"></ColumnField>
+            <ColumnField FieldName="ModifyDate" Label="修改时间" DateFormatter="yyyy-MM-dd HH:mm:ss" Width="160" IsSort="True"></ColumnField>
+        </LeoTable>
+    </div>
+</LeoContainer>
+
+@section bodyfoot {
+    <script type="text/javascript">
+        createVueApp({
+            el: '#gridList',
+            mixins: [grid],
+            data: {
+                readDataUrl: '@Html.SetPowerPublicQuery("/AudioDataManage/AlbumAudio/ReadData")',
+                pageSize: 20,
+                queryData: @Html.SetQueryData(),
+            },
+            methods: { }
+        })
+    </script>
+}
