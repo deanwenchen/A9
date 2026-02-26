@@ -24,50 +24,6 @@ namespace Baby.AudioData.Core
             return _AudioInfoContext.GetCacheEntity(AudioID, true, false, AudioVariable.ExpiresIn, AudioVariable.ExpiresIn, AudioVariable.ProviderName, AudioVariable.Db);
         }
 
-        /// <summary>
-        /// 记录专辑播放
-        /// </summary>
-        /// <param name="albumId">专辑ID</param>
-        /// <param name="date">播放日期，如果为空则使用当前日期</param>
-        public void RecordAlbumPlay(int albumId, DateTime? date = null)
-        {
-            AlbumPlayStatsService statsService = new AlbumPlayStatsService();
-            statsService.RecordDailyPlay(albumId, date);
-        }
-
-        /// <summary>
-        /// 获取专辑播放统计
-        /// </summary>
-        /// <param name="albumId">专辑ID</param>
-        /// <param name="date">日期</param>
-        /// <returns>播放次数</returns>
-        public int? GetAlbumPlayStats(int albumId, DateTime date)
-        {
-            AlbumPlayStatsService statsService = new AlbumPlayStatsService();
-            return statsService.GetDailyPlayCount(albumId, date);
-        }
-
-        ///// <summary>
-        ///// 记录音频播放
-        ///// </summary>
-        ///// <param name="audioId">音频ID</param>
-        ///// <param name="date">播放日期，如果为空则使用当前日期</param>
-        //public void RecordAudioPlay(int audioId, DateTime? date = null)
-        //{
-        //    AudioPlayStatsService statsService = new AudioPlayStatsService();
-        //    statsService.RecordDailyPlay(audioId, date);
-        //}
-
-        ///// <summary>
-        ///// 获取音频播放统计
-        ///// </summary>
-        ///// <param name="audioId">音频ID</param>
-        ///// <param name="date">日期</param>
-        ///// <returns>播放次数</returns>
-        //public int GetAudioPlayStats(int audioId, DateTime date)
-        //{
-        //    AudioPlayStatsService statsService = new AudioPlayStatsService();
-        //    return statsService.GetDailyPlayCount(audioId, date);
-        //}
+ 
     }
 }
